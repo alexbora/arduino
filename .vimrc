@@ -6,6 +6,8 @@ Plug 'honza/vim-snippets'
 "Plug 'tpope/vim-fugitive'
 Plug 'drmikehenry/vim-headerguard'
 Plug 'tibabit/vim-templates'
+Plug 'neoclide/vim-easygit'
+
 call plug#end()
 set bg=dark
 
@@ -42,12 +44,8 @@ endif
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
 
-set undodir=~/.vim/undodir
 
 
-set nobackup
-set nowritebackup
-set updatetime=300
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 "let g:clang_format#auto_format=1
@@ -74,13 +72,12 @@ nnoremap <leader>g :Goyo<CR>
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
-set makeprg=gcc-11\ -o\ %<\ %\ -lpthread\ -lwebsockets\ -lssl\ -lcrypto\ -lcurl
+set makeprg=gcc-11\ -ggdb\ -std=gnu2x\ -o\ %<\ %\ -lpthread\ -lwebsockets\ -lssl\ -lcrypto\ -lcurl\ -ljson-c\ -mavx\ -w\ -fstrict-aliasing\ -O3
 "set makeprg=gcc-11\ -o\ %:p:r\ %:p\ -std=c99\ -lpthread
+"set makeprg=clang\ -ggdb\ -std=gnu99\ -o\ %<\ %\ -lpthread\ -lwebsockets\ -lssl\ -lcrypto\ -lcurl\ -ljson-c\ -mavx\ -Weverything\ -fstrict-aliasing\ -O3
+
 set t_Co=256
-
-
 colo gruvbox
-
 
 "  if has("autocmd")
  "     augroup templates_
@@ -97,3 +94,24 @@ colo gruvbox
   "  	autocmd BufNewFile *.h call HeaderguardAdd()
       "augroup END
  "   endif
+
+"nnoremap <space>e :CocCommand explorer<CR>
+"let g:easygit_enable_command = 1
+"autocmd BufNewFile,BufRead /tmp/mutt* set noautoindent filetype=mail wm=0 tw=78 nonumber digraph nolist
+"autocmd BufNewFile,BufRead ~/tmp/mutt* set noautoindent filetype=mail wm=0 tw=78 nonumber digraph nolist
+
+
+set undodir=~/tmp/undo
+set undofile " Maintain undo history between sessions
+set hidden
+" set noswapfile
+"autocmd bufenter  ~/tmp/* :set noswapfile
+"set backupdir=/var/tmp,/tmp
+"set directory=/var/tmp,/tmp
+
+set nomodeline
+set lazyredraw
+
+set textwidth=200
+nmap <silent> gd <Plug>(coc-definition)
+
