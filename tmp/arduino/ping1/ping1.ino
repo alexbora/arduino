@@ -2,9 +2,10 @@
 
 #define TRIG_PIN 8
 #define ECHO_PIN 7
-#define MAX_DISTANCE 400
-#define COLL_DIST 20 // distanta de coliziune la care robot stop si inapoi este de : 20cm
+#define MAX_DISTANCE 58 //40
+#define COLL_DIST 16 // distanta de coliziune la care robot stop si inapoi este de : 20cm
 NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE);
+
 
 // L298n module
 // 1(+)inainte dreapta = DrFr
@@ -18,11 +19,14 @@ int StFr = 4;
 int StSp = 5;
 
 void setup() {
+//pinMode(LED_BUILTIN, OUTPUT);
+pinMode(13, OUTPUT);
 Serial.begin(9600);
 pinMode(DrFr,OUTPUT);
 pinMode(StFr,OUTPUT);
 pinMode(DrSp,OUTPUT);
 pinMode(StSp,OUTPUT);
+
 digitalWrite(DrFr,LOW);
 digitalWrite(StFr,LOW);
 digitalWrite(DrSp,LOW);
@@ -35,15 +39,22 @@ return (sonar.ping() / US_ROUNDTRIP_CM); //masurare distanta in cm
 
 void loop() {
 int Dist = scan(); // masuram distanta curenta
+
 // Serial.println(Dist);
-if (( Dist > 0 ) || ( Dist < COLL_DIST )) { // daca distanta curenta < decit distanta de coliziune
+if (  Dist < COLL_DIST ) { // daca distanta curenta < decit distanta de coliziune
+//PORTB=0b00100000;
+//PORTB &= ~(0b00100000);
+//PORTB^=PORTB;
 moveStop();
+delay(500);
 moveBackward();
 delay(500);
-turnRight();
-delay(300);
+turnLeft();
+delay(500);
 } else {
+//PORTB=0b00000000;
 moveForward();
+Dist = scan();
 }
 }
 
@@ -52,6 +63,10 @@ digitalWrite(DrFr,LOW);
 digitalWrite(StFr,LOW);
 digitalWrite(DrSp,LOW);
 digitalWrite(StSp,LOW);
+//int Dist = scan();
+//digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+ //delay(1000);                       // wait for a second
+  //digitalWrite(13, LOW); 
 }
 
 void moveForward() {
@@ -59,23 +74,38 @@ digitalWrite(DrFr,HIGH);
 digitalWrite(StFr,HIGH);
 digitalWrite(DrSp,LOW);
 digitalWrite(StSp,LOW);
+
+
+//digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+//delay(500);                       // wait for a second
+//digitalWrite(13, LOW); 
+
 }
 
-void moveBackward() {
+void moveBackward()
+{
 digitalWrite(DrFr,LOW);
 digitalWrite(StFr,LOW);
 digitalWrite(DrSp,HIGH);
 digitalWrite(StSp,HIGH);
+ 
+  //digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+ // delay(1000);                       // wait for a second
+  //digitalWrite(13, LOW);    // turn the LED off by making the voltage LOW
+ //delay(1000); 
+
 }
 
-void turnRight() {
+void turnRight()
+{
 digitalWrite(DrFr,LOW);
 digitalWrite(StFr,HIGH);
 digitalWrite(DrSp,HIGH);
 digitalWrite(StSp,LOW);
 }
 
-void turnLeft() {
+void turnLeft()
+{
 digitalWrite(DrFr,HIGH);
 digitalWrite(StFr,LOW);
 digitalWrite(DrSp,LOW);

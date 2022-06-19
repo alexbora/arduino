@@ -113,4 +113,17 @@ if [[ -n $SSH_CONNECTION ]]; then
 
 
 export CPATH=/home/linuxbrew/.linuxbrew/include:/home/linuxbrew/.linuxbrew/Cellar/openssl@1.1/1.1.1k/include:/home/linuxbrew/.linuxbrew/Cellar/json-c/0.15/include
+
 alias c=clear
+gitpush() {
+    # git add .
+    # git commit --allow-empty-message -m "$*"
+    git commit -am "$(hostname) - $(date)" 
+    git push --all
+}
+alias gp=gitpush
+
+export LD_LIBRARY_PATH=/home/linuxbrew/.linuxbrew/lib
+
+export HOMEBREW_NO_ENV_HINTS=1
+export EDITOR=vim
