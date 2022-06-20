@@ -1,4 +1,6 @@
+# include <stdint.h>
 #include <NewPing.h>
+
 
 #define TRIG_PIN 8
 #define ECHO_PIN 7
