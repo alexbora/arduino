@@ -5,7 +5,8 @@
 ############
 
 
-CC=/mnt/500x/e/bin/./arduino-cli
+CC:=/mnt/500x/e/bin/./arduino-cli
+
 
 all:
 	$(CC) upload -p /dev/ttyUSB0 -b arduino:avr:uno $1
