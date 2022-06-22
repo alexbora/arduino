@@ -18,18 +18,17 @@ int DrSp = 2;
 int StFr = 4;
 int StSp = 5;
 
-const int pingPin = 7;
 long duration, inches, cm;
 
 void setup() {
-//pinMode(LED_BUILTIN, OUTPUT);
 pinMode(13, OUTPUT);
-Serial.begin(9600);
-
 pinMode(DrFr,OUTPUT);
 pinMode(StFr,OUTPUT);
 pinMode(DrSp,OUTPUT);
 pinMode(StSp,OUTPUT);
+
+Serial.begin(9600);
+
 digitalWrite(DrFr,LOW);
 digitalWrite(StFr,LOW);
 digitalWrite(DrSp,LOW);
@@ -37,39 +36,35 @@ digitalWrite(StSp,LOW);
 }
 
 int scan() {
-return (sonar.ping() / US_ROUNDTRIP_CM); //masurare distanta in cm
+return (sonar.ping() / US_ROUNDTRIP_CM); 
 }
 
 void loop() {
-  pinMode(pingPin, OUTPUT);
-  digitalWrite(pingPin, LOW);
+  pinMode(ECHO_PIN, OUTPUT);
+  digitalWrite(ECHO_PIN, LOW);
   delayMicroseconds(2);
-  digitalWrite(pingPin, HIGH);
+  digitalWrite(ECHO_PIN, HIGH);
   delayMicroseconds(5);
-  digitalWrite(pingPin, LOW);
-  pinMode(pingPin, INPUT);
-  duration = pulseIn(pingPin, HIGH);
-//inches = microsecondsToInches(duration);
- // cm = microsecondsToCentimeters(duration);
+  digitalWrite(ECHO_PIN, LOW);
+  pinMode(ECHO_PIN, INPUT);
+  duration = pulseIn(ECHO_PIN, HIGH);
   cm = ( duration / 29 ) / 2;
 
- int Dist = scan(); // masuram distanta curenta
+ int dist = scan(); 
 
-// Serial.println(Dist);
-if (  scan() < COLL_DIST ) { // daca distanta curenta < decit distanta de coliziune
-//PORTB=0b00100000;
-//PORTB &= ~(0b00100000);
-//PORTB^=PORTB;
-moveStop();
-delay(500);
-moveBackward();
-delay(500);
-turnLeft();
-delay(500);
-} else {
-//PORTB=0b00000000;
-moveForward();
-Dist = cm;
+if (  dist < COLL_DIST ) { 
+  moveStop();
+  delay(500);
+  moveBackward();
+  delay(500);
+  turnLeft();
+  scan();
+  delay(500);
+} 
+else
+ {
+  moveForward();
+  dist = cm;
 }
 }
 
@@ -126,7 +121,5 @@ digitalWrite(StFr,LOW);
 digitalWrite(DrSp,LOW);
 digitalWrite(StSp,HIGH);
 }
-
  
 
-//––––––––––-
