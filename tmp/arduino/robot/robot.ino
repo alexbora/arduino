@@ -20,52 +20,58 @@ int StSp = 5;
 
 long duration, inches, cm;
 
-void setup() {
-pinMode(13, OUTPUT);
-pinMode(DrFr,OUTPUT);
-pinMode(StFr,OUTPUT);
-pinMode(DrSp,OUTPUT);
-pinMode(StSp,OUTPUT);
+void setup() 
+{
+	pinMode(13, OUTPUT);
+	pinMode(DrFr,OUTPUT);
+	pinMode(StFr,OUTPUT);
+	pinMode(DrSp,OUTPUT);
+	pinMode(StSp,OUTPUT);
 
-Serial.begin(9600);
+	Serial.begin(9600);
 
-digitalWrite(DrFr,LOW);
-digitalWrite(StFr,LOW);
-digitalWrite(DrSp,LOW);
-digitalWrite(StSp,LOW);
+	digitalWrite(13, LOW);
+	digitalWrite(DrFr,LOW);
+	digitalWrite(StFr,LOW);
+	digitalWrite(DrSp,LOW);
+	digitalWrite(StSp,LOW);
 }
 
-int scan() {
-return (sonar.ping() / US_ROUNDTRIP_CM); 
+int scan()
+{
+	return (sonar.ping() / US_ROUNDTRIP_CM); 
 }
 
 void loop() {
-  pinMode(ECHO_PIN, OUTPUT);
-  digitalWrite(ECHO_PIN, LOW);
-  delayMicroseconds(2);
-  digitalWrite(ECHO_PIN, HIGH);
-  delayMicroseconds(5);
-  digitalWrite(ECHO_PIN, LOW);
-  pinMode(ECHO_PIN, INPUT);
-  duration = pulseIn(ECHO_PIN, HIGH);
-  cm = ( duration / 29 ) / 2;
-
- int dist = scan(); 
+	  /*pinMode(ECHO_PIN, OUTPUT);
+	  digitalWrite(ECHO_PIN, LOW);
+	  delayMicroseconds(2);
+	  digitalWrite(ECHO_PIN, HIGH);
+	  delayMicroseconds(5);
+	  digitalWrite(ECHO_PIN, LOW);
+	  pinMode(ECHO_PIN, INPUT);
+	  duration = pulseIn(ECHO_PIN, HIGH);
+	  cm = ( duration / 29 ) / 2;
+*/
+	int dist = scan(); 
 
 if (  dist < COLL_DIST ) { 
-  moveStop();
-  delay(500);
-  moveBackward();
-  delay(500);
-  turnLeft();
-  scan();
-  delay(500);
+  	moveStop();
+  	digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+  	delay(500);
+  	moveBackward();
+  	delay(500);
+  	turnLeft();
+  	delay(500);
 } 
 else
- {
-  moveForward();
-  dist = cm;
+{
+  	digitalWrite(13, LOW);   // turn the LED on (HIGH is the voltage level)
+	delay(500);  
+	moveForward();
+  /* dist = cm; */
 }
+
 }
 
 void moveStop() {
