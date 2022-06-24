@@ -9,9 +9,9 @@
 # @created     : Miercuri Iun 22, 2022 20:10:01 EEST
 ######################################################################
 
-FQBN := arduino:avr:pro
-PORT := /dev/ttyUSB0
-BUILD := build
+FQBN :=arduino:avr:pro
+PORT :=/dev/ttyUSB0
+BUILD :=build
 FLAGS :=-Os
 
 ARDUINO := arduino-cli
