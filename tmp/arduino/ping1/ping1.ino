@@ -21,7 +21,7 @@ int StSp = 5;
 void setup() {
 //pinMode(LED_BUILTIN, OUTPUT);
 pinMode(13, OUTPUT);
-Serial.begin(9600);
+Serial.begin(115200);
 pinMode(DrFr,OUTPUT);
 pinMode(StFr,OUTPUT);
 pinMode(DrSp,OUTPUT);
