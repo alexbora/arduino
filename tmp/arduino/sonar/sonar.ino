@@ -40,11 +40,11 @@ pinMode(in4, OUTPUT);
 void fnull(){__asm__("nop");}
 
 void ahead(){
-/* digitalWrite(in1, HIGH); //stanga fata */
-/* digitalWrite(in2, LOW); */
+digitalWrite(in1, HIGH); //stanga fata
+digitalWrite(in2, LOW);
 
-/* digitalWrite(in4, HIGH); // dreapta fata */
-/* digitalWrite(in3, LOW); */
+digitalWrite(in4, HIGH); // dreapta fata
+digitalWrite(in3, LOW);
 /* analogWrite(EN_B, 100); */
 
  /* for (int i = 0; i < 256; i++) { */
@@ -54,12 +54,12 @@ void ahead(){
     /* } */
 
 
-  analogWrite(EN_A, 250); // Send PWM signal to L298N Enable pin
-  delay(2000);
-  analogWrite(EN_A, 150);
-  delay(2000);
-  analogWrite(EN_A, 0);
-  delay(2000);
+  analogWrite(EN_A, 200); // Send PWM signal to L298N Enable pin
+  /* delay(2000); */
+  analogWrite(EN_A, 200);
+  /* delay(2000); */
+  /* analogWrite(EN_A, 0); */
+  /* delay(2000); */
   
 
 }
