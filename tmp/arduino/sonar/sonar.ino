@@ -4,15 +4,12 @@
 
 #include <NewPing.h>
 
-#define TRIGGER_PIN                                                            \
-  8                // Arduino pin tied to trigger pin on the ultrasonic sensor.
+#define TRIGGER_PIN 8                // Arduino pin tied to trigger pin on the ultrasonic sensor.
 #define ECHO_PIN 7 // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE                                                           \
-  400 // Maximum distance we want to ping for (in centimeters). Maximum sensor
+#define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor
       // distance is rated at 400-500cm.
 
-NewPing sonar(TRIGGER_PIN, ECHO_PIN,
-              MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
 
 int EN_A = 9; // 4
 int in1 = 2;  // stanga
@@ -24,8 +21,7 @@ int in4 = 5;
 
 void setup() {
   pinMode(13, OUTPUT);
-  Serial.begin(
-      115200); // Open serial monitor at 115200 baud to see ping results.
+  Serial.begin(9600); 
 
   pinMode(EN_A, OUTPUT);
   pinMode(in1, OUTPUT);
@@ -54,9 +50,9 @@ void ahead() {
   /* delay(20); */
   /* } */
 
-  analogWrite(EN_A, 160); // Send PWM signal to L298N Enable pin
+  analogWrite(EN_A, 145); // Send PWM signal to L298N Enable pin
   /* delay(2000); */
-  analogWrite(EN_A, 160);
+  analogWrite(EN_A, 145);
   /* delay(2000); */
   analogWrite(EN_A, 0);
   /* delay(2000); */
@@ -102,11 +98,12 @@ void right() {
 
 void obstacle(void) {
   stop();
-  delay(50);
+  delay(1000);
   void (*f[])(void) = {left, right};
   f[rand()%2]();
+  delay(1000);  
   back();
-  delay(2000);
+  delay(1000);
   stop();
 }
 
