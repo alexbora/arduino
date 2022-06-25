@@ -15,7 +15,7 @@ int EN_A = 9; //4
 int in1 = 2; // stanga 
 int in2 = 3;
 
-int EN_B = 3; //3 // 10
+int EN_B = 10; //3 // 10
 int in3 = 4; // dreapta
 int in4 = 5;
 
@@ -27,9 +27,10 @@ void setup() {
 pinMode(EN_A, OUTPUT);
 pinMode(in1, OUTPUT);
 pinMode(in2, OUTPUT);
+
+pinMode(EN_B, OUTPUT);
 pinMode(in3, OUTPUT);
 pinMode(in4, OUTPUT);
-pinMode(EN_B, OUTPUT);
 /* analogWrite(EN_A, 255); */
 /* analogWrite(EN_B, 255); */
 
@@ -39,11 +40,11 @@ pinMode(EN_B, OUTPUT);
 void fnull(){__asm__("nop");}
 
 void ahead(){
-digitalWrite(in1, HIGH); //stanga fata
-digitalWrite(in2, LOW);
+/* digitalWrite(in1, HIGH); //stanga fata */
+/* digitalWrite(in2, LOW); */
 
-digitalWrite(in4, HIGH); // dreapta fata
-digitalWrite(in3, LOW);
+/* digitalWrite(in4, HIGH); // dreapta fata */
+/* digitalWrite(in3, LOW); */
 /* analogWrite(EN_B, 100); */
 
  /* for (int i = 0; i < 256; i++) { */
@@ -52,6 +53,14 @@ digitalWrite(in3, LOW);
       /* delay(20); */
     /* } */
 
+
+  analogWrite(EN_A, 250); // Send PWM signal to L298N Enable pin
+  delay(2000);
+  analogWrite(EN_A, 150);
+  delay(2000);
+  analogWrite(EN_A, 0);
+  delay(2000);
+  
 
 }
 
@@ -106,7 +115,7 @@ void loop() {
   /* int potValue = analogRead(A0); // Read potentiometer value */
   /* int out = map(potValue, 0, 1023, 0 , 255); // Map the potentiometer value from 0 to 255 */
   /* analogWrite(enA, pwmOutput); */
-
+ahead();
 
 
   delay(100); //50                     // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
@@ -132,6 +141,8 @@ switch (cm) {
 
 /* if (cm == 0) fnull(); */
 
+
+#if 0
 if(31 > cm && cm > 1) 
 /* PINB |= 1<<5; */
 	PORTB = 1 << 5, stop(), back(), left();
@@ -140,6 +151,7 @@ else if(cm == 0) fnull();
 else
   /* digitalWrite(13, LOW); */
 	PORTB &= ~(1<<5), ahead();
+#endif
 
 
 #if 0
