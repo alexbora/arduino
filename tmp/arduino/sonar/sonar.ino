@@ -55,11 +55,11 @@ digitalWrite(in3, LOW);
 
 
   analogWrite(EN_A, 200); // Send PWM signal to L298N Enable pin
-  /* delay(2000); */
+  delay(2000);
   analogWrite(EN_A, 200);
-  /* delay(2000); */
-  /* analogWrite(EN_A, 0); */
-  /* delay(2000); */
+  delay(2000);
+  analogWrite(EN_A, 0);
+  delay(2000);
   
 
 }
