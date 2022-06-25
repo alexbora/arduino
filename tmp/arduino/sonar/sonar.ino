@@ -3,6 +3,8 @@
 // ---------------------------------------------------------------------------
 
 #include <NewPing.h>
+#include <time.h>
+
 
 #define TRIGGER_PIN 8                // Arduino pin tied to trigger pin on the ultrasonic sensor.
 #define ECHO_PIN 7 // Arduino pin tied to echo pin on the ultrasonic sensor.
@@ -32,6 +34,7 @@ void setup() {
   pinMode(in4, OUTPUT);
   /* analogWrite(EN_A, 255); */
   /* analogWrite(EN_B, 255); */
+sramd((unsigned long)time(0));
 }
 
 void fnull() { __asm__("nop"); }
