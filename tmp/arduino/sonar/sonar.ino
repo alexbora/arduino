@@ -11,11 +11,11 @@
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
 
 
-int EN_A = 9;
+int EN_A = 9; //4
 int in1 = 2; // stanga 
 int in2 = 3;
 
-int EN_B = 10;
+int EN_B = 3; //3 // 10
 int in3 = 4; // dreapta
 int in4 = 5;
 
@@ -24,12 +24,12 @@ void setup() {
   Serial.begin(115200); // Open serial monitor at 115200 baud to see ping results.
 
 
-/* pinMode(EN_A, OUTPUT); */
-/* pinMode(in1, OUTPUT); */
-/* pinMode(in2, OUTPUT); */
-/* pinMode(in3, OUTPUT); */
-/* pinMode(in4, OUTPUT); */
-/* pinMode(EN_B, OUTPUT); */
+pinMode(EN_A, OUTPUT);
+pinMode(in1, OUTPUT);
+pinMode(in2, OUTPUT);
+pinMode(in3, OUTPUT);
+pinMode(in4, OUTPUT);
+pinMode(EN_B, OUTPUT);
 /* analogWrite(EN_A, 255); */
 /* analogWrite(EN_B, 255); */
 
@@ -44,7 +44,15 @@ digitalWrite(in2, LOW);
 
 digitalWrite(in4, HIGH); // dreapta fata
 digitalWrite(in3, LOW);
-analogWrite(EN_B, 100);
+/* analogWrite(EN_B, 100); */
+
+ /* for (int i = 0; i < 256; i++) { */
+      /* analogWrite(EN_B, i); */
+      /* analogWrite(EN_A, i); */
+      /* delay(20); */
+    /* } */
+
+
 }
 
 void back(){
@@ -61,7 +69,7 @@ digitalWrite(in2, LOW);
 
 digitalWrite(in4, LOW); // dreapta fata
 digitalWrite(in3, LOW);
-delay(500);
+delay(1000);
 }
 
 
@@ -126,7 +134,7 @@ switch (cm) {
 
 if(31 > cm && cm > 1) 
 /* PINB |= 1<<5; */
-	PORTB = 1 << 5, stop(), stop(), back();
+	PORTB = 1 << 5, stop(), back(), left();
   /* digitalWrite(13, HIGH); */
 else if(cm == 0) fnull();
 else
