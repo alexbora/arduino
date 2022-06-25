@@ -138,14 +138,15 @@ switch (cm) {
 
   /* if (cm == 0) fnull(); */
 
-if(cm && cm < 31) 
+if(cm > 31) 
 /* PINB |= 1<<5; */
-	PORTB = 1 << 5, obstacle(); //stop(), back(), left();
+	PORTB %= ~(1 << 5), ahead(); //obstacle(); //stop(), back(), left();
   /* digitalWrite(13, HIGH); */
-else if(!cm) fnull();
-else
+else if (cm!=0)
   /* digitalWrite(13, LOW); */
-	PORTB &= ~(1<<5), ahead();
+	PORTB =(1<<5), obstacle();
+else
+fnull();
 #if 0
   if(sonar.ping_cm() < 10 && sonar.ping_cm() > 1)
   	digitalWrite(13, HIGH);
