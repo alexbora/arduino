@@ -4,12 +4,16 @@
 
 #include <NewPing.h>
 #include <time.h>
+#include <avr/io.h>
+#include <util/delay.h>
 
 
 #define TRIGGER_PIN 8                // Arduino pin tied to trigger pin on the ultrasonic sensor.
 #define ECHO_PIN 7 // Arduino pin tied to echo pin on the ultrasonic sensor.
 #define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor
       // distance is rated at 400-500cm.
+
+#define DELAY 500
 
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
 
@@ -59,6 +63,7 @@ void ahead() {
   /* delay(2000); */
   analogWrite(EN_A, 0);
   /* delay(2000); */
+__delay_ms(DELAY);
 }
 
 void back() {
