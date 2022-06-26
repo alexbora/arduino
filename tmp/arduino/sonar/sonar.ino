@@ -14,6 +14,7 @@
       // distance is rated at 400-500cm.
 
 #define DELAY 500
+#define NAKED __attribute__((naked)) 
 
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
 
@@ -41,9 +42,9 @@ void setup() {
   srand((unsigned long)time(0));
 }
 
-void inline fnull() { __asm__("nop"); }
+void inline fnull() NAKED { __asm__("nop"); }
 
-void inline ahead() {
+void inline ahead() __attribute__((naked)) {
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -181,4 +182,13 @@ void oneSensorCycle(
 void potentiometer() {
   Serial.print("Potentiometer value: ");
   Serial.print(analogRead(A0));
+}
+
+void somefunction(void) __attribute__((naked))
+{
+  asm volatile ("
+
+ ; your assembly code here
+
+  ");
 }
