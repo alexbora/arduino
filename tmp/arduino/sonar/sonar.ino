@@ -42,7 +42,7 @@ void setup() {
   srand((unsigned long)time(0));
 }
 
-void inline fnull() NAKED { __asm__("nop"); }
+void inline fnull() NAKED { __asm__("nop\n\t"::); }
 
 void inline ahead() __attribute__((naked)) {
   digitalWrite(in1, HIGH); // stanga fata
