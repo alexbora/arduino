@@ -16,6 +16,9 @@
 #define DELAY 500
 #define NAKED __attribute__((naked)) 
 
+static int last;
+
+
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
 
 int EN_A = 9; // 4
@@ -42,9 +45,9 @@ void setup() {
   srand((unsigned long)time(0));
 }
 
-void inline fnull() NAKED { __asm__("nop\n\t"::); }
+void inline fnull() { __asm__("nop\n\t"::); }
 
-void inline ahead() __attribute__((naked)) {
+void inline ahead() {
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -64,7 +67,7 @@ void inline ahead() __attribute__((naked)) {
   /* delay(2000); */
   /* analogWrite(EN_A, 0); */
   /* delay(2000); */
-  __delay_ms(DELAY);
+  _delay_ms(DELAY);
 }
 
 void inline back() {
@@ -127,6 +130,9 @@ void loop() {
               // pings/sec). 29ms should be the shortest delay between pings.
 
   int cm = sonar.ping_cm();
+  if(cm) last = cm;  
+  if(!cm) cm = last;
+
   distance(cm);
   /* oneSensorCycle(cm); */
 
@@ -184,11 +190,3 @@ void potentiometer() {
   Serial.print(analogRead(A0));
 }
 
-void somefunction(void) __attribute__((naked))
-{
-  asm volatile ("
-
- ; your assembly code here
-
-  ");
-}
