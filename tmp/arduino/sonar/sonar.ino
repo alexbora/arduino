@@ -38,12 +38,12 @@ void setup() {
   pinMode(in4, OUTPUT);
   /* analogWrite(EN_A, 255); */
   /* analogWrite(EN_B, 255); */
-sramd((unsigned long)time(0));
+  srand((unsigned long)time(0));
 }
 
-void fnull() { __asm__("nop"); }
+void inline fnull() { __asm__("nop"); }
 
-void ahead() {
+void inline ahead() {
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -61,12 +61,12 @@ void ahead() {
   /* delay(2000); */
   analogWrite(EN_A, 145);
   /* delay(2000); */
-  analogWrite(EN_A, 0);
+  /* analogWrite(EN_A, 0); */
   /* delay(2000); */
-__delay_ms(DELAY);
+  __delay_ms(DELAY);
 }
 
-void back() {
+void inline back() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, HIGH);
 
@@ -77,7 +77,7 @@ void back() {
   delay(1000);
 }
 
-void stop() {
+void inline stop() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -86,7 +86,7 @@ void stop() {
   delay(1000);
 }
 
-void left() {
+void inline left() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -95,7 +95,7 @@ void left() {
   delay(500);
 }
 
-void right() {
+void inline right() {
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -104,7 +104,7 @@ void right() {
   delay(500);
 }
 
-void obstacle(void) {
+void inline obstacle(void) {
   stop();
   delay(1000);
   void (*f[])(void) = {left, right};
@@ -125,12 +125,8 @@ void loop() {
   delay(100); // 50                     // Wait 50ms between pings (about 20
               // pings/sec). 29ms should be the shortest delay between pings.
 
-  Serial.print("Ping: ");
-  Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print
-                                 // result (0 = outside set distance range)
-  Serial.println("cm");
-
   int cm = sonar.ping_cm();
+  distance(cm);
   /* oneSensorCycle(cm); */
 
 #if 0
@@ -162,6 +158,14 @@ else
   else
   	digitalWrite(13, LOW);
 #endif
+}
+
+void distance(int cm){
+  Serial.print("Ping: ");
+  /* Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print */
+  Serial.print(cm); // Send ping, get distance in cm and print
+                                 // result (0 = outside set distance range)
+  Serial.println("cm");
 }
 
 void oneSensorCycle(
