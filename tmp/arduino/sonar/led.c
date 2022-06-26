@@ -5,11 +5,11 @@
  */
 
 /* #include <Arduino.h> */
-/* #include <avr/io.h> */
-/* #include <util/delay.h> */
+#include <avr/io.h>
+#include <util/delay.h>
 
-#include "HardwareSerial.h"
-#define MS_DELAY 500
+/* #include "HardwareSerial.h" */
+#define MS_DELAY 3000
 
 int main(void) {
   /*Set to one the fifth bit of DDRB to one
@@ -22,13 +22,12 @@ int main(void) {
     PORTB |= _BV(PORTB5);
 
     /*Wait 3000 ms */
-    /* _delay_ms(MS_DELAY); */
+    _delay_ms(MS_DELAY);
 
     /*Set to zero the fifth bit of PORTB
     **Set to LOW the pin 13 */
     PORTB &= ~_BV(PORTB5);
-
     /*Wait 3000 ms */
-    /* _delay_ms(MS_DELAY); */
+    _delay_ms(MS_DELAY);
   }
 }
