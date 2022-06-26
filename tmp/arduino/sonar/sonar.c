@@ -1,11 +1,12 @@
 // ---------------------------------------------------------------------------
 // Example NewPing library sketch that does a ping about 20 times per second.
 // ---------------------------------------------------------------------------
-
+#include <stdlib.h>
+/* #include "Arduino.h" */
 #include <NewPing.h>
 /* #include <time.h> */
-#include <avr/io.h>
-#include <util/delay.h>
+/* #include <avr/io.h> */
+/* #include <util/delay.h> */
 
 #define TRIGGER_PIN                                                            \
   8                // Arduino pin tied to trigger pin on the ultrasonic sensor.
