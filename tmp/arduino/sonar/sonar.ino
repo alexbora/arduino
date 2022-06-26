@@ -14,9 +14,9 @@
       // distance is rated at 400-500cm.
 
 #define DELAY 500
-#define NAKED __attribute__((naked)) 
+/* #define NAKED __attribute__((naked)) */ 
 
-static int last;
+/* static int last; */
 
 
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
@@ -42,10 +42,10 @@ void setup() {
   pinMode(in4, OUTPUT);
   /* analogWrite(EN_A, 255); */
   /* analogWrite(EN_B, 255); */
-  srand((unsigned long)time(0));
+  /* srand((unsigned long)time(0)); */
 }
 
-void inline fnull() { __asm__("nop\n\t"::); }
+void inline fnull() { __asm__("nop"); }
 
 void inline ahead() {
   digitalWrite(in1, HIGH); // stanga fata
@@ -96,6 +96,8 @@ void inline left() {
 
   digitalWrite(in4, HIGH); // dreapta fata
   digitalWrite(in3, LOW);
+  analogWrite(EN_A, 145); 
+  analogWrite(EN_A, 145);
   delay(500);
 }
 
@@ -105,6 +107,8 @@ void inline right() {
 
   digitalWrite(in4, LOW); // dreapta fata
   digitalWrite(in3, HIGH);
+  analogWrite(EN_A, 145); 
+  analogWrite(EN_A, 145);
   delay(500);
 }
 
@@ -129,11 +133,18 @@ void loop() {
   delay(100); // 50                     // Wait 50ms between pings (about 20
               // pings/sec). 29ms should be the shortest delay between pings.
 
-  int cm = sonar.ping_cm();
-  if(cm) last = cm;  
-  if(!cm) cm = last;
+  Serial.print("Ping: ");
+  Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print
+                                 // result (0 = outside set distance range)
+  Serial.println("cm");
 
-  distance(cm);
+
+
+  int cm = sonar.ping_cm();
+  /* if(cm) last = cm; */  
+  /* if(!cm) cm = last; */
+
+  /* distance(cm); */
   /* oneSensorCycle(cm); */
 
 #if 0
@@ -151,11 +162,11 @@ switch (cm) {
 
 if(cm > 31) 
 /* PINB |= 1<<5; */
-	PORTB %= ~(1 << 5), ahead(); //obstacle(); //stop(), back(), left();
+	PORTB &= ~(1 << 5), ahead(); //obstacle(); //stop(), back(), left();
   /* digitalWrite(13, HIGH); */
 else if (cm!=0)
   /* digitalWrite(13, LOW); */
-	PORTB =(1<<5), obstacle();
+	PORTB = (1 << 5), obstacle();
 else
   fnull();
 #if 0
