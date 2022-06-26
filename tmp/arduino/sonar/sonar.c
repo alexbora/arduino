@@ -3,23 +3,23 @@
 // ---------------------------------------------------------------------------
 
 #include <NewPing.h>
-#include <time.h>
+/* #include <time.h> */
 #include <avr/io.h>
 #include <util/delay.h>
 
-
-#define TRIGGER_PIN 8                // Arduino pin tied to trigger pin on the ultrasonic sensor.
+#define TRIGGER_PIN                                                            \
+  8                // Arduino pin tied to trigger pin on the ultrasonic sensor.
 #define ECHO_PIN 7 // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor
+#define MAX_DISTANCE                                                           \
+  400 // Maximum distance we want to ping for (in centimeters). Maximum sensor
       // distance is rated at 400-500cm.
 
 #define DELAY 500
-/* #define NAKED __attribute__((naked)) */ 
+/* #define NAKED __attribute__((naked)) */
 
 /* static int last; */
 
-
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 int EN_A = 9; // 4
 int in1 = 2;  // stanga
@@ -28,7 +28,6 @@ int in2 = 3;
 int EN_B = 10; // 3 // 10
 int in3 = 4;   // dreapta
 int in4 = 5;
-
 
 void inline fnull() { __asm__("nop"); }
 
@@ -81,7 +80,7 @@ void inline left() {
 
   digitalWrite(in4, HIGH); // dreapta fata
   digitalWrite(in3, LOW);
-  analogWrite(EN_A, 145); 
+  analogWrite(EN_A, 145);
   analogWrite(EN_A, 145);
   delay(500);
 }
@@ -92,7 +91,7 @@ void inline right() {
 
   digitalWrite(in4, LOW); // dreapta fata
   digitalWrite(in3, HIGH);
-  analogWrite(EN_A, 145); 
+  analogWrite(EN_A, 145);
   analogWrite(EN_A, 145);
   delay(500);
 }
@@ -101,16 +100,16 @@ void inline obstacle(void) {
   stop();
   delay(1000);
   void (*f[])(void) = {left, right};
-  f[rand()%2]();
-  delay(1000);  
+  f[rand() % 2]();
+  delay(1000);
   back();
   delay(1000);
   stop();
 }
 
-int main () {
+int main() {
   pinMode(13, OUTPUT);
-  Serial.begin(9600); 
+  Serial.begin(9600);
 
   pinMode(EN_A, OUTPUT);
   pinMode(in1, OUTPUT);
@@ -123,30 +122,27 @@ int main () {
   /* analogWrite(EN_B, 255); */
   /* srand((unsigned long)time(0)); */
 
-
   /* int potValue = analogRead(A0); // Read potentiometer value */
   /* int out = map(potValue, 0, 1023, 0 , 255); // Map the potentiometer value
    * from 0 to 255 */
   /* analogWrite(enA, pwmOutput); */
   /* ahead(); */
 
-  while(1){
-  delay(100); // 50                     // Wait 50ms between pings (about 20
-              // pings/sec). 29ms should be the shortest delay between pings.
+  while (1) {
+    delay(100); // 50                     // Wait 50ms between pings (about 20
+                // pings/sec). 29ms should be the shortest delay between pings.
 
-  Serial.print("Ping: ");
-  Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print
-                                 // result (0 = outside set distance range)
-  Serial.println("cm");
+    Serial.print("Ping: ");
+    Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print
+                                   // result (0 = outside set distance range)
+    Serial.println("cm");
 
+    int cm = sonar.ping_cm();
+    /* if(cm) last = cm; */
+    /* if(!cm) cm = last; */
 
-
-  int cm = sonar.ping_cm();
-  /* if(cm) last = cm; */  
-  /* if(!cm) cm = last; */
-
-  /* distance(cm); */
-  /* oneSensorCycle(cm); */
+    /* distance(cm); */
+    /* oneSensorCycle(cm); */
 
 #if 0
 switch (cm) {
@@ -157,19 +153,19 @@ switch (cm) {
 }
 
 #endif
-  /* void (*fp)(int, int) = digitalWrite; */
+    /* void (*fp)(int, int) = digitalWrite; */
 
-  /* if (cm == 0) fnull(); */
+    /* if (cm == 0) fnull(); */
 
-if(cm > 31) 
-/* PINB |= 1<<5; */
-	PORTB &= ~(1 << 5), ahead(); //obstacle(); //stop(), back(), left();
-  /* digitalWrite(13, HIGH); */
-else if (cm!=0)
-  /* digitalWrite(13, LOW); */
-	PORTB = (1 << 5), obstacle();
-else
-  fnull();
+    if (cm > 31)
+      /* PINB |= 1<<5; */
+      PORTB &= ~(1 << 5), ahead(); // obstacle(); //stop(), back(), left();
+    /* digitalWrite(13, HIGH); */
+    else if (cm != 0)
+      /* digitalWrite(13, LOW); */
+      PORTB = (1 << 5), obstacle();
+    else
+      fnull();
 #if 0
   if(sonar.ping_cm() < 10 && sonar.ping_cm() > 1)
   	digitalWrite(13, HIGH);
@@ -177,16 +173,16 @@ else
   else
   	digitalWrite(13, LOW);
 #endif
-    
-    }
-return 0;
+  }
+  return 0;
 }
 
-void distance(int cm){
+void distance(int cm) {
   Serial.print("Ping: ");
-  /* Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print */
+  /* Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print
+   */
   Serial.print(cm); // Send ping, get distance in cm and print
-                                 // result (0 = outside set distance range)
+                    // result (0 = outside set distance range)
   Serial.println("cm");
 }
 
@@ -204,4 +200,3 @@ void potentiometer() {
   Serial.print("Potentiometer value: ");
   Serial.print(analogRead(A0));
 }
-

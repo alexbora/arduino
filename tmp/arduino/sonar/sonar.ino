@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------
 
 #include <NewPing.h>
-#include <time.h>
-#include <avr/io.h>
-#include <util/delay.h>
+/* #include <time.h> */
+/* #include <avr/io.h> */
+/* #include <util/delay.h> */
 
 
 #define TRIGGER_PIN 8                // Arduino pin tied to trigger pin on the ultrasonic sensor.
@@ -29,25 +29,27 @@ int EN_B = 10; // 3 // 10
 int in3 = 4;   // dreapta
 int in4 = 5;
 
+
+
 void setup() {
   pinMode(13, OUTPUT);
-  Serial.begin(9600); 
 
-  pinMode(EN_A, OUTPUT);
+  /* pinMode(EN_A, OUTPUT); */
   pinMode(in1, OUTPUT);
   pinMode(in2, OUTPUT);
 
-  pinMode(EN_B, OUTPUT);
+  /* pinMode(EN_B, OUTPUT); */
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
   /* analogWrite(EN_A, 255); */
   /* analogWrite(EN_B, 255); */
   /* srand((unsigned long)time(0)); */
+  Serial.begin(9600); 
 }
 
-void inline fnull() { __asm__("nop"); }
+void   fnull() { __asm__("nop"); }
 
-void inline ahead() {
+void   ahead() {
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -61,27 +63,25 @@ void inline ahead() {
   /* delay(20); */
   /* } */
 
-  analogWrite(EN_A, 145); // Send PWM signal to L298N Enable pin
+  /* analogWrite(EN_A, 145); // Send PWM signal to L298N Enable pin */
   /* delay(2000); */
-  analogWrite(EN_A, 145);
+  /* analogWrite(EN_A, 145); */
   /* delay(2000); */
   /* analogWrite(EN_A, 0); */
-  /* delay(2000); */
-  _delay_ms(DELAY);
+  delay(500);
+  /* _delay_ms(DELAY); */
 }
 
-void inline back() {
+void   back() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, HIGH);
 
   digitalWrite(in4, LOW); // dreapta fata
   digitalWrite(in3, HIGH);
-  analogWrite(EN_A, 160); // Send PWM signal to L298N Enable pin
-  analogWrite(EN_B, 160); // Send PWM signal to L298N Enable pin
   delay(1000);
 }
 
-void inline stop() {
+void   stop() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -90,29 +90,25 @@ void inline stop() {
   delay(1000);
 }
 
-void inline left() {
+void   left() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, LOW);
 
   digitalWrite(in4, HIGH); // dreapta fata
   digitalWrite(in3, LOW);
-  analogWrite(EN_A, 145); 
-  analogWrite(EN_A, 145);
   delay(500);
 }
 
-void inline right() {
+void   right() {
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
   digitalWrite(in4, LOW); // dreapta fata
   digitalWrite(in3, HIGH);
-  analogWrite(EN_A, 145); 
-  analogWrite(EN_A, 145);
   delay(500);
 }
 
-void inline obstacle(void) {
+void   obstacle(void) {
   stop();
   delay(1000);
   void (*f[])(void) = {left, right};
@@ -128,8 +124,8 @@ void loop() {
   /* int out = map(potValue, 0, 1023, 0 , 255); // Map the potentiometer value
    * from 0 to 255 */
   /* analogWrite(enA, pwmOutput); */
-  /* ahead(); */
-
+  ahead();
+#if 0
   delay(100); // 50                     // Wait 50ms between pings (about 20
               // pings/sec). 29ms should be the shortest delay between pings.
 
@@ -169,6 +165,12 @@ else if (cm!=0)
 	PORTB = (1 << 5), obstacle();
 else
   fnull();
+
+
+#endif
+
+
+
 #if 0
   if(sonar.ping_cm() < 10 && sonar.ping_cm() > 1)
   	digitalWrite(13, HIGH);
