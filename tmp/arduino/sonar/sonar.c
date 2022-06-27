@@ -1,9 +1,10 @@
 // ---------------------------------------------------------------------------
 // Example NewPing library sketch that does a ping about 20 times per second.
 // ---------------------------------------------------------------------------
-#include <stdlib.h>
-/* #include "Arduino.h" */
+/* #include <Arduino.h> */
+/* #include <avr/interrupt.h> */
 #include <NewPing.h>
+#include <stdlib.h>
 /* #include <time.h> */
 /* #include <avr/io.h> */
 /* #include <util/delay.h> */
@@ -138,6 +139,7 @@ int main() {
                                    // result (0 = outside set distance range)
     Serial.println("cm");
 
+    ahead();
     int cm = sonar.ping_cm();
     /* if(cm) last = cm; */
     /* if(!cm) cm = last; */

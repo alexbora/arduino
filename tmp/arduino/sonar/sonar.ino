@@ -124,7 +124,6 @@ void loop() {
   /* int out = map(potValue, 0, 1023, 0 , 255); // Map the potentiometer value
    * from 0 to 255 */
   /* analogWrite(enA, pwmOutput); */
-  ahead();
 #if 0
   delay(100); // 50                     // Wait 50ms between pings (about 20
               // pings/sec). 29ms should be the shortest delay between pings.

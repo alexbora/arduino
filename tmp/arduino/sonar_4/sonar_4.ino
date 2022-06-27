@@ -44,7 +44,7 @@ void setup() {
   /* analogWrite(EN_A, 255); */
   /* analogWrite(EN_B, 255); */
   /* srand((unsigned long)time(0)); */
-  Serial.begin(9600); 
+  Serial.begin(115200); 
 }
 
 void   fnull() { __asm__("nop"); }
@@ -127,7 +127,7 @@ void loop() {
    * from 0 to 255 */
   /* analogWrite(enA, pwmOutput); */
   
-  delay(100); // 50                     // Wait 50ms between pings (about 20
+  delay(29); // 50                     // Wait 50ms between pings (about 20
               // pings/sec). 29ms should be the shortest delay between pings.
 
   Serial.print("Ping: ");
@@ -163,7 +163,7 @@ if(cm > 31)
   /* digitalWrite(13, HIGH); */
 else if (cm!=0)
   /* digitalWrite(13, LOW); */
-	PORTB = (1 << 5), obstacle();
+	PORTB = (1 << 5), stop(), back(), left();
 else
   fnull();
 
