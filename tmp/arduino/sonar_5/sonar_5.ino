@@ -21,7 +21,7 @@ int in4 = 5;
 
 
 
-static void setup() {
+void setup() {
   pinMode(13, OUTPUT);
 
   /* pinMode(EN_A, OUTPUT); */
@@ -37,16 +37,24 @@ static void setup() {
 }
 
 
-static inline void ahead() {
+void ahead() {
 
 
-  for (int i = 0; i < 256; i++) {
-{  analogWrite(9, i); //ENA pin
-  analogWrite(10, i); //ENB pin
-}
+  /* for (int i = 0; i < 256; i++) { */  
+	/* analogWrite(9, i); //ENA pin */
+  	/* analogWrite(10, i); //ENB pin */
+	/* } */
 
 
-  digitalWrite(in1, HIGH); // stanga fata
+	/* analogWrite(in4, 150); //ENA pin */
+	/* analogWrite(in2, 150); //ENA pin */
+  
+
+	/* analogWrite(in1, 150); //ENA pin */
+	/* analogWrite(in2, 150); //ENA pin */
+
+
+digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
   digitalWrite(in4, HIGH); // dreapta fata
@@ -68,7 +76,7 @@ static inline void ahead() {
   /* _delay_ms(DELAY); */
 }
 
-static inline void   back() {
+void   back() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, HIGH);
 
@@ -77,7 +85,7 @@ static inline void   back() {
   delay(DELAY * 2);
 }
 
-static inline void   stop() {
+void   stop() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -86,7 +94,7 @@ static inline void   stop() {
   delay(DELAY * 2);
 }
 
-static inline void   left() {
+void   left() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -95,7 +103,7 @@ static inline void   left() {
   delay(DELAY);
 }
 
-static inline void right() {
+void right() {
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -106,14 +114,14 @@ static inline void right() {
 
 
 
-static inline long microsecondsToCentimeters(long microseconds)
+long microsecondsToCentimeters(long microseconds)
 {
 	return (microseconds / 29 / 2);
 }
 
 
 
-static inline long scanner()
+long scanner()
 {
 	const int pingPin=8, EchoPin=7;
 	long duration = 0;
