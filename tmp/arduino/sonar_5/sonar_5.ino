@@ -37,11 +37,13 @@ static void setup() {
 }
 
 
-static inline void   ahead() {
+static inline void ahead() {
 
-  analogWrite(9, 100); //ENA pin
-  analogWrite(10, 200); //ENB pin
 
+  for (int i = 0; i < 256; i++) {
+{  analogWrite(9, i); //ENA pin
+  analogWrite(10, i); //ENB pin
+}
 
 
   digitalWrite(in1, HIGH); // stanga fata
