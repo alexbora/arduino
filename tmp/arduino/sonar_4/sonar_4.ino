@@ -120,8 +120,26 @@ void (*f[])(void) = {left, right};
   delay(1000);
   stop();
 }
-
+long duration, cm2;
 void loop() {
+  digitalWrite(7, LOW);
+  delayMicroseconds(5);
+  digitalWrite(7, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(7, LOW);
+  pinMode(8, INPUT);
+  duration = pulseIn(echoPin, HIGH);
+  cm2 = (duration/2) / 29.1;
+  
+ if (cm2 < 31 && cm2 > 1){
+    stop(); back(); left();
+  }
+  else
+  {
+ahead();
+  }
+
+
   /* int potValue = analogRead(A0); // Read potentiometer value */
   /* int out = map(potValue, 0, 1023, 0 , 255); // Map the potentiometer value
    * from 0 to 255 */
@@ -152,7 +170,6 @@ switch (cm) {
 		
 }
 
-#endif
   /* void (*fp)(int, int) = digitalWrite; */
 
   /* if (cm == 0) fnull(); */
@@ -167,6 +184,7 @@ else if (cm!=0)
 else
   fnull();
 
+#endif // muta-l
 
 #if 0
   if(sonar.ping_cm() < 10 && sonar.ping_cm() > 1)
