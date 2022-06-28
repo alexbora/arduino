@@ -21,7 +21,7 @@ int in4 = 5;
 
 
 
-void setup() {
+static void setup() {
   pinMode(13, OUTPUT);
 
   /* pinMode(EN_A, OUTPUT); */
@@ -33,13 +33,17 @@ void setup() {
   pinMode(in4, OUTPUT);
   /* analogWrite(EN_A, 255); */
   /* analogWrite(EN_B, 255); */
-  /* srand((unsigned long)time(0)); */
   Serial.begin(115200); 
 }
 
-void   fnull() { __asm__("nop"); }
 
-void   ahead() {
+static inline void   ahead() {
+
+  analogWrite(9, 100); //ENA pin
+  analogWrite(10, 200); //ENB pin
+
+
+
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
@@ -58,82 +62,92 @@ void   ahead() {
   /* analogWrite(EN_A, 145); */
   /* delay(2000); */
   /* analogWrite(EN_A, 0); */
-  delay(500);
+  delay(DELAY);
   /* _delay_ms(DELAY); */
 }
 
-void   back() {
+static inline void   back() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, HIGH);
 
   digitalWrite(in4, LOW); // dreapta fata
   digitalWrite(in3, HIGH);
-  delay(1000);
+  delay(DELAY * 2);
 }
 
-void   stop() {
+static inline void   stop() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, LOW);
 
   digitalWrite(in4, LOW); // dreapta fata
   digitalWrite(in3, LOW);
-  delay(1000);
+  delay(DELAY * 2);
 }
 
-void   left() {
+static inline void   left() {
   digitalWrite(in1, LOW); // stanga fata
   digitalWrite(in2, LOW);
 
   digitalWrite(in4, HIGH); // dreapta fata
   digitalWrite(in3, LOW);
-  delay(500);
+  delay(DELAY);
 }
 
-void   right() {
+static inline void right() {
   digitalWrite(in1, HIGH); // stanga fata
   digitalWrite(in2, LOW);
 
   digitalWrite(in4, LOW); // dreapta fata
   digitalWrite(in3, HIGH);
-  delay(500);
+  delay(DELAY);
 }
 
 
 
-
-long scanner()
+static inline long microsecondsToCentimeters(long microseconds)
 {
-const int pingPin=8, EchoPin=7;
-long duration;
-
-pinMode(pingPin, OUTPUT);
-pinMode(EchoPin, INPUT);  
-
-digitalWrite(pingPin, LOW);
-delayMicroseconds(2);
-digitalWrite(pingPin, HIGH);
-delayMicroseconds(2);  // Only 2uS NOT 10!
-digitalWrite(pingPin, LOW); 
-duration = pulseIn(EchoPin, HIGH);
-delay(100);
-
-return microsecondsToCentimeters(duration);
+	return (microseconds / 29 / 2);
+}
 
 
-long microsecondsToCentimeters(long microseconds)
+
+static inline long scanner()
 {
-return microseconds / 29 / 2;
+	const int pingPin=8, EchoPin=7;
+	long duration = 0;
+
+	pinMode(pingPin, OUTPUT);
+	pinMode(EchoPin, INPUT);  
+
+
+	digitalWrite(pingPin, LOW);
+	delayMicroseconds(2);
+	digitalWrite(pingPin, HIGH);
+	delayMicroseconds(2);  // Only 2uS NOT 10!
+	digitalWrite(pingPin, LOW); 
+	duration = pulseIn(EchoPin, HIGH);
+	delay(100);
+
+	return microsecondsToCentimeters(duration);
 }
 
 
 void loop() {
   
-delay(50);
+	delay(50);
  
-long cm = scanner();  
+	long cm = scanner();  
 
-  Serial.print("Ping: ");
-  Serial.print(cm); // Send ping, get distance in cm and print
-                                 // result (0 = outside set distance range)
-  Serial.println("cm");
+	if (cm > 35)
+	{ 
+		ahead(); PORTB &= ~(1 << 5);
+	}
+	else
+	{
+		stop(); back(); left(); stop(); PORTB =(1<<5);
+	}
+
+  /* Serial.print("Ping: "); */
+  /* Serial.print(cm); */ 
+  /* Serial.println("cm"); */
 }
